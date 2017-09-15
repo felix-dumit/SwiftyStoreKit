@@ -261,4 +261,18 @@ extension SwiftyStoreKit {
 
         return InAppReceipt.verifySubscription(type: type, productId: productId, inReceipt: receipt, validUntil: date)
     }
+    
+    
+    /**
+     *  Verify the purchase of all subscriptions (auto-renewable, free or non-renewing) in a receipt. This method extracts all transactions mathing the one of given productId and sorts them by date in descending order, then compares the first transaction expiry date against the validUntil value.
+     *  - Parameter type: autoRenewable or nonRenewing
+     *  - Parameter productIds: the product ids of the purchase to verify (should be same family)
+     *  - Parameter inReceipt: the receipt to use for looking up the subscription
+     *  - Parameter validUntil: date to check against the expiry date of the subscription. If nil, no verification
+     *  - return: either .notPurchased or .purchased / .expired with the expiry date found in the receipt
+     */
+    public class func verifyAllSubscriptions(type: SubscriptionType, productIds: Set<String>, inReceipt receipt: ReceiptInfo, validUntil date: Date = Date()) -> VerifySubscriptionResult {
+        
+        return InAppReceipt.verifyAllSubscriptions(type: type, productIds: productIds, inReceipt: receipt, validUntil: date)
+    }
 }
